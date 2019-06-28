@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="zLandingPage">
+        <input type="button" id="logOutBtn" value="LogOut">
+        <div id="mainInfo">
+            <div id="numOfRegUsers"></div>
+            <div id="numOfRegProjects"></div>
+            <div id="numOfRegIssues"></div>
+        </div>
+        <div id="buttons">
+            <button id="listUsers">List All Users</button>
+            <button id="createUser">Register New User</button>
+            <button id="listProjects">List All Projects</button>
+            <button id="createProject">Create New Project</button>
+        </div>
+
+    </div>
+    <div id="zListDiv">
+        <div id="zListUsers"></div>
+        <div id="zListProjects"></div>
+    </div>
+    <div id="zCreateDiv">
+
+        <div id="zCreateUser">
+            <div>
+                <fieldset id="myFieldsetUser">
+                    <legend>Register New User:</legend>
+                    First Name <br>
+                    <input type="text" id="firstName" value="" placeholder="First Name" required><br>
+                    Last Name: <br>
+                    <input type="text" id="lastName" value="" placeholder="Last Name" required><br>
+                    Username:<br>
+                    <input type="text" id="userName" value="" placeholder="Username" required><br>
+                    Password:<br>
+                    <input type="text" id="password" placeholder="Version"><br>
+                    Role:<br>
+                    <input type="radio" id="roleAdmin" name="roles" value="admin">
+                    <label for="roleAdmin">Admin</label>
+                    <br>
+                    <input type="radio" id="roleUser" name="roles" value="user">
+                    <label for="roleUser">User</label>
+                    <br>
+                    Email:<br>
+                    <input type="email" id="email" placeholder="Email"> <br>
+                    <br>
+                    <button id="regUser">Create</button>
+                </fieldset>
+            </div>
+        </div>
+
+        <div id="zCreateProject">
+            <fieldset id="myFieldsetProject">
+                <legend>Create Project:</legend>
+                Project Name: <br>
+                <input type="text" id="projectName" placeholder="Project Name" required><br>
+                Organization: <br>
+                <input type="text" id="organization" placeholder="Organization Name" required><br>
+                Due Date:<br>
+                <input type="date" id="dueDate" required><br>
+                Version:<br>
+                <input type="text" id="version" placeholder="Version"><br>
+                Description:<br>
+                <input type="text" id="description" placeholder="Description" width="200px" height="200px"> <br>
+                <br>
+                <button id="submitProject">Create</button>
+            </fieldset>
+        </div>
+    </div>
+    <div id="editDiv"></div>
+</body>
+<script src="index.js"></script>
+
+</html>
+
