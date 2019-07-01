@@ -149,109 +149,39 @@ function gPopulateDescriptionSection(findIssue){
 //#endregion
 //#region populate people table
 function gPopulatePeopleSection(findReporter,findUser,findIssue,user,issues){
-    let watchersCount = findIssue.watchers.length;
     //user who is loged 
     let assigneUser = user.find(userId => userId.id === loggedUserId);
     //find out if the logged user watch this issue
     let watch = assigneUser.watched_issues.includes(findIssue.id);
     let check = assigneUser.assigned_issues.includes(findIssue.id);
     console.log(watch);
-    console.log(check)
+    console.log(check);
+    let assigne;
+    let watched;
+    let watchedId;
     //user who is assigne in the moment when logged user go to the iisue page
     let assignedUser = findUser.firstName + " " +  findUser.lastName;
     if(watch && check){
-        gInputs.gContainerTwo.innerHTML +=
-        `
-        <table class="g-table">
-            <tr>
-                <td></td>
-                <td><a class="g-link"></a></td>
-            </tr>
-            <tr>
-                <td>Assignee: </td>
-                <td id="full-name"><i class="fas fa-check-double"></i> ${assignedUser}</td>
-            </tr>
-            <tr>
-                <td>Reporter:</td>
-                <td id="reporter"><i class="fas fa-user"></i> ${findReporter.firstName} ${findReporter.lastName}</td>
-            </tr>
-            <tr>
-                <td>Watchers:</td>
-                <td id="watch"><input type="button" value="${watchersCount}" class="g-dropbtn g-dropbtn2"> <a class="g-link" id="stop-watch"> Stop watching this
-                issue</a></td>
-            </tr>
-            </table>
-        `
+        assigne = "";
+        watched = "Stop watching this issue";
+        watchedId = "stop-watch";
+        populateAssigneAndWatchedTable(assignedUser,findReporter,assigne,watched,watchedId);
     }
     else if((!watch) && check){
-        gInputs.gContainerTwo.innerHTML +=
-        `
-        <table class="g-table">
-            <tr>
-                <td></td>
-                <td><a class="g-link"></a></td>
-            </tr>
-            <tr>
-                <td>Assignee: </td>
-                <td id="full-name"><i class="fas fa-check-double"></i> ${assignedUser}</td>
-            </tr>
-            <tr>
-                <td>Reporter:</td>
-                <td id="reporter"><i class="fas fa-user"></i> ${findReporter.firstName} ${findReporter.lastName}</td>
-            </tr>
-            <tr>
-                <td>Watchers:</td>
-                <td id="watch"><input type="button" value="${watchersCount}" class="g-dropbtn g-dropbtn2"> <a class="g-link" id="start-watch"> Start watch this
-                issue</a></td>
-            </tr>
-            </table>
-        `
+        assigne = "";
+        watched = "Start watch this issue";
+        watchedId = "start-watch";
+        populateAssigneAndWatchedTable(assignedUser,findReporter,assigne,watched,watchedId);
     }else if(!watch && !check){
-        gInputs.gContainerTwo.innerHTML +=
-        `
-        <table class="g-table">
-            <tr>
-                <td></td>
-                <td><a class="g-link" id="assigne">Assigne to me</a></td>
-            </tr>
-            <tr>
-                <td>Assignee: </td>
-                <td id="full-name"><i class="fas fa-check-double"></i> ${assignedUser}</td>
-            </tr>
-            <tr>
-                <td>Reporter:</td>
-                <td id="reporter"><i class="fas fa-user"></i> ${findReporter.firstName} ${findReporter.lastName}</td>
-            </tr>
-            <tr>
-                <td>Watchers:</td>
-                <td id="watch"><input type="button" value="${watchersCount}" class="g-dropbtn g-dropbtn2"> <a class="g-link" id="start-watch"> Start watch this
-                issue</a></td>
-            </tr>
-            </table>
-        `
+        assigne = "Assigne to me";
+        watched = "Start watch this issue";
+        watchedId = "start-watch";
+        populateAssigneAndWatchedTable(assignedUser,findReporter,assigne,watched,watchedId);
     }else{
-        gInputs.gContainerTwo.innerHTML +=
-        `
-        <table class="g-table">
-            <tr>
-                <td></td>
-                <td><a class="g-link" id="assigne">Assigne to me</a></td>
-            </tr>
-            <tr>
-                <td>Assignee: </td>
-                <td id="full-name"><i class="fas fa-check-double"></i> ${assignedUser}</td>
-            </tr>
-            <tr>
-                <td>Reporter:</td>
-                <td id="reporter"><i class="fas fa-user"></i> ${findReporter.firstName} ${findReporter.lastName}</td>
-            </tr>
-            <tr>
-                <td>Watchers:</td>
-                <td id="watch"><input type="button" value="${watchersCount}" class="g-dropbtn g-dropbtn2"> <a class="g-link" id="stop-watch"> Stop watching this
-                issue</a></td>
-            </tr>
-            </table>
-        ` 
+        assigne = "Assigne to me";
+        watched = "Stop watching this issue";
+        watchedId = "stop-watch";
+        populateAssigneAndWatchedTable(assignedUser,findReporter,assigne,watched,watchedId);
     }
    
     gInputs.gContainerTwo.addEventListener("click",function(e){
@@ -266,19 +196,40 @@ function gPopulatePeopleSection(findReporter,findUser,findIssue,user,issues){
             `;
         }else if(e.target.id === "stop-watch"){
             stopWatchingIssue(user,findIssue,issues);
-            if(watchersCount > 1){
-                document.querySelector(".g-dropbtn2").value = `${watchersCount -1}`;
-            }
             document.getElementById("stop-watch").id = "start-watch";
             document.getElementById("start-watch").textContent = "Start watch this issue";
         }else if(e.target.id === "start-watch"){
             startWatchIssue(user,findIssue,issues);
-            document.querySelector(".g-dropbtn2").value = `${watchersCount ++}`;
             document.getElementById("start-watch").id = "stop-watch";
             document.getElementById("stop-watch").textContent = "Stop watching this issue";
         }
     });
 };
+//#region populate table with assigne and watch
+function populateAssigneAndWatchedTable(assignedUser,findReporter,assigne,watched,watchedId){
+    gInputs.gContainerTwo.innerHTML +=
+    `
+    <table class="g-table">
+        <tr>
+            <td></td>
+            <td><a class="g-link" id="assigne">${assigne}</a></td>
+        </tr>
+        <tr>
+            <td>Assignee: </td>
+            <td id="full-name"><i class="fas fa-check-double"></i> ${assignedUser}</td>
+        </tr>
+        <tr>
+            <td>Reporter:</td>
+            <td id="reporter"><i class="fas fa-user"></i> ${findReporter.firstName} ${findReporter.lastName}</td>
+        </tr>
+        <tr>
+            <td>Watchers:</td>
+            <td id="watch"> <a class="g-link" id="${watchedId}"> ${watched}</a></td>
+        </tr>
+        </table>
+    ` 
+}
+//#endregion
 //#endregion
 //#region assigne method
 function assigneToMe(user,issue,findUser,issues){
