@@ -265,7 +265,6 @@ function stopWatchingIssue(user,issue,issues){
     let assigneUser = user.find(userId => userId.id === loggedUserId);
     let indexOfLoggedUser = user.indexOf(assigneUser);
     let indexOfIssue = issues.indexOf(issue);
-    console.log(indexOfIssue);
     //find index of watched issue
     let index = assigneUser.watched_issues.indexOf(issue.id);
     //find index of user in array of watched issue
@@ -427,12 +426,13 @@ async function gGetData() {
         let result = await fetch("https://raw.githubusercontent.com/pm-project-frontend/jsons/master/projects.json");
         let result1 = await fetch("https://raw.githubusercontent.com/pm-project-frontend/jsons/master/issues.json");
         let result2 = await fetch("https://raw.githubusercontent.com/pm-project-frontend/jsons/master/users.json");
-        gDataIssues = await result1.json();
-        gDataProjects = await result.json();
-        gDataUsers = await result2.json();
-        console.log(gDataUsers);
-        console.log(gDataIssues);
-        console.log(gDataProjects)
+        let issues = await result1.json();
+        let projects = await result.json();
+        let users = await result2.json();
+        localStorage.setItem("users", JSON.stringify(users));
+        localStorage.setItem("projects", JSON.stringify(projects));
+        localStorage.setItem("issues", JSON.stringify(issues));
+        getResults();
          gGenerateTable(gDataProjects);
          gGenerateTable1(gDataIssues,gDataUsers);
          gPopulateStaticAssignePart(gInputs.gSecondDiv,gDataIssues,gDataUsers);
@@ -441,4 +441,9 @@ async function gGetData() {
     }
 }
 //#endregion
+function getResults() {
+    gDataUsers = JSON.parse(localStorage.getItem("users"));
+    gDataProjects = JSON.parse(localStorage.getItem("projects"));
+    gDataIssues = JSON.parse(localStorage.getItem("issues"));
+  }
 gGetData()
