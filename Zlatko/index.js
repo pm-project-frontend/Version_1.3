@@ -75,10 +75,18 @@ btnListUsers.addEventListener("click", function () {
     document.getElementById("zCreateUser").style.display = "none";
     document.getElementById("zCreateProject").style.display = "none";
     for (const elem of zResultUser) {
-        mainElem.innerHTML += `<p id=${elem.id}>${elem.firstName} ${elem.lastName} ${elem.role} </p><br>
-        <input type="button" name="deleteUser" id="${elem.id}" value="Delete">
-        <input type="button" name="editUser" id="${elem.id}" value="Edit">
-        <input type="button" name="viewUser" id="${elem.id}" value="View">`
+        mainElem.innerHTML += `
+        <div class="card" style="width: 20rem;">
+        <div class="card-body">
+        <h5 class="card-title" id=${elem.id}>${elem.firstName} ${elem.lastName}</h5>
+        <p class="text-secondary" id=${elem.id}class="card-text" > ${elem.role} </p><br>
+        <input type="button" class="btn btn-danger" name="deleteUser" id="${elem.id}" value="Delete">
+        <input type="button" class="btn btn-secondary" name="editUser" id="${elem.id}" value="Edit">
+        <input type="button" class="btn btn-secondary" name="viewUser" id="${elem.id}" value="View">
+        </div>
+        </div>
+        <br/>
+        `
     }
 })
 document.getElementById("zListDiv").addEventListener("click", (e) => {
@@ -97,19 +105,19 @@ function editUser(reqId) {
     pos = zResultUser.map(function (e) { return e.id; }).indexOf(reqId);
     user = zResultUser[pos];
     document.getElementById("editDiv").innerHTML =
-        `<div>
+        `<div class="form-group row">
                 <fieldset id="myFieldsetUser">
                     <legend>Register New User:</legend>
                     First Name <br>
-                    <input type="text" id="firstNameEdit" value="${user.firstName}" required><br>
+                    <input type="text" class="form-control"  id="firstNameEdit" value="${user.firstName}" required><br>
                     Last Name: <br>
-                    <input type="text" id="lastNameEdit" value="${user.lastName}" required><br>
+                    <input type="text"class="form-control"  id="lastNameEdit" value="${user.lastName}" required><br>
                     Username:<br>
-                    <input type="text" id="userNameEdit" value="${user.userName}" required><br>
+                    <input type="text" class="form-control" id="userNameEdit" value="${user.userName}" required><br>
                     Password:<br>
-                    <input type="text" id="passwordEdit" value="${user.password}"><br>
+                    <input type="text" class="form-control" id="passwordEdit" value="${user.password}"><br>
                     Email:<br>
-                    <input type="email" id="emailEdit" value="${user.email}"> <br>
+                    <input type="email" class="form-control" id="emailEdit" value="${user.email}"> <br>
                     <br>
                     <input type="radio" id="statusActive" name="statusEdit" value="active">
                     <label for="statusActive">Active</label>
@@ -117,7 +125,7 @@ function editUser(reqId) {
                     <input type="radio" id="statusDisable" name="statusEdit" value="suspended">
                     <label for="statusDisable">Suspended</label>
                     <br>
-                    <button id="btnEditUser" name="update">Save</button>
+                    <button id="btnEditUser" class="btn btn-danger" name="update">Save</button>
                 </fieldset>
             </div>`
     if (user.status == "active") {
@@ -153,10 +161,17 @@ btnListProjects.addEventListener("click", function () {
     document.getElementById("zCreateUser").style.display = "none";
     document.getElementById("zCreateProject").style.display = "none";
     for (const elem of zResultProject) {
-        mainElem.innerHTML += `<p id=${elem.id}>${elem.projectName} ${elem.organization} ${elem.role} </p><br>
-        <input type="button" name="delete" id="${elem.id}" value="Delete">
-        <input type="button" name="edit" id="${elem.id}" value="Edit">
-        <input type="button" name="view" id="${elem.id}" value="View">`
+        mainElem.innerHTML += `
+        <div class="card" style="width: 25rem;"> 
+        <div class="card-body">
+        <h4 id=${elem.id} class="card-title">${elem.projectName}</h4>
+        <p id=${elem.id} class="card-text">${elem.organization} <span class="badge badge-secondary">${elem.status}</span> </p><br>
+        <input type="button" class="btn btn-danger" name="delete" id="${elem.id}" value="Delete">
+        <input type="button" class="btn btn-secondary" name="edit" id="${elem.id}" value="Edit">
+        <input type="button" class="btn btn-secondary" name="view" id="${elem.id}" value="View">
+        </div>
+        </div><br/>
+        `
     }
 })
 document.getElementById("zListDiv").addEventListener("click", (e) => {
@@ -175,19 +190,19 @@ function editProject(reqIdpro) {
     project = zResultProject.find(x => x.id == reqIdpro);
     posProject = zResultProject.indexOf(project);
     document.getElementById("editDiv").innerHTML =
-        `<div>
+        `<div class="form-group row">
                 <fieldset id="myFieldsetUser">
                     <legend>Edit Project:</legend>
                     Project Name <br>
-                    <input type="text" id="projectNameEdit" value="${project.projectName}" required><br>
+                    <input type="text" class="form-control" id="projectNameEdit" value="${project.projectName}" required><br>
                     Organizaton <br>
-                    <input type="text" id="organizationEdit" value="${project.organization}" required><br>
+                    <input type="text" class="form-control" id="organizationEdit" value="${project.organization}" required><br>
                     Due Date:<br>
-                    <input type="date" id="dueDateEdit" value="${project.dueDate}" required><br>
+                    <input type="date" class="form-control" id="dueDateEdit" value="${project.dueDate}" required><br>
                     Version:<br>
-                    <input type="text" id="versionEdit" value="${project.version}"><br>
+                    <input type="text" class="form-control" id="versionEdit" value="${project.version}"><br>
                     Description:<br>
-                    <input type="text" id="descriptionEdit" value="${project.description}">
+                    <input type="text" class="form-control" id="descriptionEdit" value="${project.description}">
                     <br>
                     <input type="radio" id="ststusOpen" name="statusEditProject" value="Open">
                     <label for="statusOpen">Open</label>
@@ -195,7 +210,7 @@ function editProject(reqIdpro) {
                     <input type="radio" id="statusClosed" name="statusEditProject" value="Closed">
                     <label for="statusClosed">Closed</label>
                     <br>
-                    <button id="btnEditProject" name="update">Save</button>
+                    <button id="btnEditProject" class="btn btn-danger" name="update">Save</button>
                 </fieldset>
             </div>`
             if(project.status == "Open"){

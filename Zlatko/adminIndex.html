@@ -5,73 +5,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="zstyle.css"/>
     <title>Document</title>
 </head>
 
 <body>
-    <div id="zLandingPage">
-        <input type="button" id="logOutBtn" value="LogOut">
-        <div id="mainInfo">
-            <div id="numOfRegUsers"></div>
-            <div id="numOfRegProjects"></div>
-            <div id="numOfRegIssues"></div>
+    <div class="container" id="zLandingPage">
+        <input type="button" class="btn btn-primary" id="logOutBtn" value="LogOut">
+        <div id="mainInfo" class="list-group list-group-flush">
+            <div id="numOfRegUsers" class="list-group-item"></div>
+            <div id="numOfRegProjects"class="list-group-item" ></div>
+            <div id="numOfRegIssues" class="list-group-item"></div>
         </div>
         <div id="buttons">
-            <button id="listUsers">List All Users</button>
-            <button id="createUser">Register New User</button>
-            <button id="listProjects">List All Projects</button>
-            <button id="createProject">Create New Project</button>
+            <button id="listUsers" class="btn btn-secondary" >List All Users</button>
+            <button id="createUser" class="btn btn-secondary">Register New User</button>
+            <button id="listProjects" class="btn btn-secondary">List All Projects</button>
+            <button id="createProject" class="btn btn-danger">Create New Project</button>
         </div>
 
     </div>
     <div id="zListDiv">
-        <div id="zListUsers"></div>
+        <div id="zListUsers" class="card-body"></div>
         <div id="zListProjects"></div>
     </div>
     <div id="zCreateDiv">
 
-        <div id="zCreateUser">
+        <div id="zCreateUser" class="form-group row">
             <div>
                 <fieldset id="myFieldsetUser">
                     <legend>Register New User:</legend>
                     First Name <br>
-                    <input type="text" id="firstName" value="" placeholder="First Name" required><br>
+                    <input type="text" id="firstName" class="form-control" value="" placeholder="First Name" required><br>
                     Last Name: <br>
-                    <input type="text" id="lastName" value="" placeholder="Last Name" required><br>
+                    <input type="text" id="lastName" class="form-control" value="" placeholder="Last Name" required><br>
                     Username:<br>
-                    <input type="text" id="userName" value="" placeholder="Username" required><br>
+                    <input type="text" id="userName" class="form-control" value="" placeholder="Username" required><br>
                     Password:<br>
-                    <input type="text" id="password" placeholder="Version"><br>
+                    <input type="text" id="password" class="form-control" placeholder="Version"><br>
                     Role:<br>
-                    <input type="radio" id="roleAdmin" name="roles" value="admin">
+                    <input type="radio" id="roleAdmin"  name="roles" value="admin">
                     <label for="roleAdmin">Admin</label>
                     <br>
-                    <input type="radio" id="roleUser" name="roles" value="user">
+                    <input type="radio" id="roleUser"  name="roles" value="user">
                     <label for="roleUser">User</label>
                     <br>
                     Email:<br>
-                    <input type="email" id="email" placeholder="Email"> <br>
+                    <input type="email" id="email" class="form-control" placeholder="Email"> <br>
                     <br>
-                    <button id="regUser">Create</button>
+                    <button id="regUser" class="btn btn-danger">Create</button>
                 </fieldset>
             </div>
         </div>
 
-        <div id="zCreateProject">
+        <div id="zCreateProject" class="form-group row">
             <fieldset id="myFieldsetProject">
                 <legend>Create Project:</legend>
                 Project Name: <br>
-                <input type="text" id="projectName" placeholder="Project Name" required><br>
+                <input type="text" id="projectName"class="form-control"  placeholder="Project Name" required><br>
                 Organization: <br>
-                <input type="text" id="organization" placeholder="Organization Name" required><br>
+                <input type="text" id="organization" class="form-control" placeholder="Organization Name" required><br>
                 Due Date:<br>
-                <input type="date" id="dueDate" required><br>
+                <input type="date" id="dueDate" class="form-control"  required><br>
                 Version:<br>
-                <input type="text" id="version" placeholder="Version"><br>
+                <input type="text" id="version" class="form-control" placeholder="Version"><br>
                 Description:<br>
-                <input type="text" id="description" placeholder="Description" width="200px" height="200px"> <br>
+                <input type="text" id="description" class="form-control" placeholder="Description" width="200px" height="200px"> <br>
                 <br>
-                <button id="submitProject">Create</button>
+                <button id="submitProject" class="btn btn-danger">Create</button>
             </fieldset>
         </div>
     </div>
