@@ -51,7 +51,7 @@ return element.innerHTML +=
 function gPopulateIssuesOneRow(element,data){
 
     element.innerHTML += `
-        <div class="g-watched-header g-watched-header-data" id="${data.project}">
+        <div class="g-watched-header g-watched-header-data" id="${data.project}" title="${data.id}">
                 <div id="${data.project}" title="${data.id}">${data.id}</div>
                 <div id="${data.project}" title="${data.id}">${data.summary}</div>
                 <div id="${data.project}" title="${data.id}">${data.status}</div>
@@ -89,6 +89,7 @@ function gPopulateStaticAssignePart(element,findIssue,findUser){
     //find if user have assigned issues
     if(user.assigned_issues.length !== 0){
         let filterArr = findIssue.filter(project => user.assigned_issues.includes(project.id));
+        console.log(user.assigned_issues)
         for(var project of filterArr){
             element.innerHTML += 
                 `
@@ -154,8 +155,6 @@ function gPopulatePeopleSection(findReporter,findUser,findIssue,user,issues){
     //find out if the logged user watch this issue
     let watch = assigneUser.watched_issues.includes(findIssue.id);
     let check = assigneUser.assigned_issues.includes(findIssue.id);
-    console.log(watch);
-    console.log(check);
     let assigne;
     let watched;
     let watchedId;
@@ -205,6 +204,7 @@ function gPopulatePeopleSection(findReporter,findUser,findIssue,user,issues){
         }
     });
 };
+//#endregion
 //#region populate table with assigne and watch
 function populateAssigneAndWatchedTable(assignedUser,findReporter,assigne,watched,watchedId){
     gInputs.gContainerTwo.innerHTML +=
@@ -229,7 +229,6 @@ function populateAssigneAndWatchedTable(assignedUser,findReporter,assigne,watche
         </table>
     ` 
 }
-//#endregion
 //#endregion
 //#region assigne method
 function assigneToMe(user,issue,findUser,issues){
