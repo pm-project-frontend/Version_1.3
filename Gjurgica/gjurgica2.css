@@ -14,16 +14,18 @@ body{
     padding: 1rem;
     background-size: cover;
     min-width: 95%;
-    min-height: 95vh;
+    height: 100%;
     margin: 1rem auto;
     box-shadow: 0 2rem 6rem rgba(0,0,0,.3);
     font-size: 1.5rem;
     padding: 3rem;
-    background-color: #217CA3;
 }
 #g-container1{
+    height: 100%;
+    background-color: #217CA3;
+    padding: 3rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 .g-header{
     background-color: #32384D;
@@ -84,7 +86,8 @@ body{
   .g-link:hover{
     cursor: pointer;
   }
-  #g-container2{
+  .g-container2{
+    background-color: #217CA3;
     display: flex;
     justify-content: space-between;
 }
@@ -118,6 +121,11 @@ body{
     color: #f0810f;
     border-radius: 0.6rem;
     border: 0.1rem solid #e6df44;
+  }
+  .g-text-area{
+    min-width: 100%;
+    min-height: 10rem;
+
   }
   .g-paragraph,
   .g-project-header h1,
@@ -193,15 +201,9 @@ img{
   height: 4rem;
   border-radius: 50%;
 }
-  @media (max-width: 768px){
-    body{
-        margin: 0;
-        background-size: cover;
-        height: 100vh;
-        box-shadow: none;
-      } 
+  @media (max-width: 768px){ 
       #g-container1,
-      #g-container2
+      .g-container2
       {
         flex-direction: column;
       }
@@ -212,14 +214,8 @@ img{
       }
   }
   @media (max-width: 1200px){
-    body{
-        margin: 0;
-        background-size: cover;
-        height: 100vh;
-        box-shadow: none;
-      }
       #g-container1,
-      #g-container2
+      .g-container2
       {
         flex-direction: column;
       }

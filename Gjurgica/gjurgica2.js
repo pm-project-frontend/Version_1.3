@@ -11,8 +11,6 @@ let gInputs = {
     gContainerTwo: document.querySelector(".g-container2"),
     gFirstDiv: document.querySelector(".g-first"),
     gSecondDiv: document.querySelector(".g-second"),
-    gThirdDiv: document.querySelector(".g-third"),
-    gFourth: document.querySelector(".g-fourth")
 }
 //#endregion
 gInputs.gContainerTwo.style.display = "block";
