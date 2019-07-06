@@ -13,6 +13,16 @@ let gInputs = {
     gSecondDiv: document.querySelector(".g-second"),
 }
 //#endregion
+
+gInputs.gFirstDiv.addEventListener("click", (e)=>{
+    if(e.target.id == null || e.target.id == undefined || e.target.id == ""){
+        return
+    }else{
+        let projectId = e.target.id;
+        localStorage.setItem("viewProject", JSON.stringify(projectId));
+        window.open("../Bobi/index.html", "_self");
+    }
+})
 gInputs.gContainerTwo.style.display = "block";
 //#region populate project div 
 function gPopulateStaticProjectPart(element){
@@ -32,6 +42,8 @@ function gGenerateTable(data){
         }
     }
 //#endregion
+
+
 //#region populate wathed issue div
 function gPopulateStaticIssueParts(element){
 return element.innerHTML += 
@@ -180,7 +192,7 @@ function gPopulatePeopleSection(findReporter,findUser,findIssue,user,issues){
         watchedId = "stop-watch";
         populateAssigneAndWatchedTable(assignedUser,findReporter,assigne,watched,watchedId);
     }
-   
+    
     gInputs.gContainerTwo.addEventListener("click",function(e){
         if(e.target.id === "assigne"){
             assigneToMe(user,findIssue,findUser,issues);
@@ -444,3 +456,29 @@ function gPopulateCommentArea(findIssue,findUser,issues){
 gGenerateTable(gDataProjects);
 gGenerateTable1(gDataIssues,gDataUsers);
 gPopulateStaticAssignePart(gInputs.gSecondDiv,gDataIssues,gDataUsers);
+
+gInputs.gSecondDiv.addEventListener("click",function(e){
+    if(e.target.id !== undefined && e.target.id !== null && e.target.id !== "" && e.target.id.length !== 0){
+        gInputs.gContainerOne.style.display = "none";
+        gInputs.gContainerTwo.style.display = "block";
+        populateIssuePage(e.target);
+    }
+});
+
+function populateIssuePage(e){
+    let findIssue = gDataIssues.filter(issue => issue.project === e.id)
+        .find(issue => issue.id === e.title);
+        console.log(findIssue);
+        let findProject = gDataProjects.find(project => project.id === e.id);
+        console.log(findProject);
+        let findUser = gDataUsers.find(user => user.id === findIssue.assignee);
+        console.log(findUser);
+        let findReporter = gDataUsers.find(project => project.id === findIssue.reporter)
+        console.log(findReporter)
+        gPopulateHeaderSection(findIssue,findProject);
+        gPopulateDescriptionSection(findIssue);
+        gPopulatePeopleSection(findReporter,findUser,findIssue,gDataUsers,gDataIssues);
+        gPopulateDescription(findIssue);
+        gPopulateDates(findIssue,findProject);
+        gPopulateCommentArea(findIssue,gDataUsers,gDataIssues);
+}

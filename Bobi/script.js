@@ -2,7 +2,7 @@
 let bResultIssue = [];
 let bResultProject = [];
 let bResultUser = [];
-let projectId
+let projectId;
 let activeProject = {};
 //#endregion
 //#region Importing info
@@ -19,6 +19,8 @@ async function start() {
     }
 }
 start();
+
+
 //#endregion
 //#region Printing basic project info
 function giveBasicInfo() {
