@@ -1,7 +1,7 @@
 //#region variables
-let gDataProjects;
-let gDataIssues;
-let gDataUsers;
+let gDataProjects = JSON.parse(localStorage.getItem("projects"));
+let gDataIssues = JSON.parse(localStorage.getItem("issues"));
+let gDataUsers = JSON.parse(localStorage.getItem("users"));
 let loggedUserId = JSON.parse(localStorage.getItem("loggedUser"));
 let watchedIssue;
 //#endregion
@@ -251,7 +251,7 @@ function assigneToMe(user,issue,findUser,issues){
 //#endregion
 //#region update issue method
 function updateIssue(issue,issues,indexOfIssue){
-    let updateIssue = ({
+    let updateIssue = {
         "id": issue.id,
         "project": issue.project,
         "issue_type": issue.issue_type,
@@ -270,14 +270,14 @@ function updateIssue(issue,issues,indexOfIssue){
         "fixVersion": issue.fixVersion,
         "status": issue.status,
         "watchers": issue.watchers
-    });
+    };
     issues.splice(indexOfIssue,1,updateIssue);
     localStorage.setItem("issues", JSON.stringify(issues));
 }
 //#endregion
 //#region updateUsers method
 function updateUsers(findUser,user,indexOfExAssignedUser){
-    let updateExAssignedUser = ({
+    let updateExAssignedUser = {
         "id": findUser.id,
         "firstName": findUser.firstName,
         "lastName": findUser.lastName,
@@ -290,7 +290,7 @@ function updateUsers(findUser,user,indexOfExAssignedUser){
         "status": findUser.status,
         "assigned_issues": findUser.assigned_issues,
         "watched_issues": findUser.watched_issues
-    });
+    };
     user.splice(indexOfExAssignedUser,1,updateExAssignedUser);
     localStorage.setItem("users", JSON.stringify(user));
 }
@@ -414,8 +414,8 @@ function gPopulateCommentArea(findIssue,findUser,issues){
             gTextArea.innerHTML += `
             <p class="g-paragraph"><img src="${user.image}"/> <span class="g-comments-text"><span class="g-full-name">${user.firstName} ${user.lastName}:</span> ${gComment}</span></p>
             `
-            findCommentator.push({UserID: user.id,c: gComment});
-            let updateIssue = ({
+            findCommentator.push({userID: user.id,c: gComment});
+            let updateIssue = {
                 "affectedVersion": findIssue.affectedVersion,
                 "assignee": findIssue.assignee,
                 "comments": findCommentator,
@@ -433,7 +433,7 @@ function gPopulateCommentArea(findIssue,findUser,issues){
                 "status": findIssue.status,
                 "summary": findIssue.summary,
                 "watchers": findIssue.watchers
-            });
+            };
             issues.splice(index,1,updateIssue);
             localStorage.setItem("issues", JSON.stringify(issues));
         }
@@ -441,85 +441,6 @@ function gPopulateCommentArea(findIssue,findUser,issues){
         
     });   
 };
-//#endregion
-//#region firstDiv event
-gInputs.gFirstDiv.addEventListener("click",function(e){
-    if(e.target.id !== undefined && e.target.id !== null && e.target.id !== "" && e.target.id.length !== 0){
-        gInputs.gContainerOne.style.display = "none";
-        let findProject = gDataProjects.find(project => project.id === e.target.id);
-        localStorage.setItem("viewProject", JSON.stringify(findProject.id));
-        window.open("../Bobi/index.html", "_self");
-    }
-});
-//#endregion
-//#region secondDiv event
-gInputs.gSecondDiv.addEventListener("click",function(e){
-    if(e.target.id !== undefined && e.target.id !== null && e.target.id !== "" && e.target.id.length !== 0){
-        gInputs.gContainerOne.style.display = "none";
-        gInputs.gContainerTwo.style.display = "block";
-        populateIssuePage(e.target);
-    }
-});
-//#endregion
-//#region populate issue page
-function populateIssuePage(e){
-    let findIssue = gDataIssues.filter(issue => issue.project === e.id)
-        .find(issue => issue.id === e.title);
-        console.log(findIssue);
-        let findProject = gDataProjects.find(project => project.id === e.id);
-        console.log(findProject);
-        let findUser = gDataUsers.find(user => user.id === findIssue.assignee);
-        console.log(findUser);
-        let findReporter = gDataUsers.find(project => project.id === findIssue.reporter)
-        console.log(findReporter)
-        gPopulateHeaderSection(findIssue,findProject);
-        gPopulateDescriptionSection(findIssue);
-        gPopulatePeopleSection(findReporter,findUser,findIssue,gDataUsers,gDataIssues);
-        gPopulateDescription(findIssue);
-        gPopulateDates(findIssue,findProject);
-        gPopulateCommentArea(findIssue,gDataUsers,gDataIssues);
-}
-//#endregion
-//#region fetch
-async function gGetData() {
-    try {
-        let result = await fetch("https://raw.githubusercontent.com/pm-project-frontend/jsons/master/projects.json");
-        let result1 = await fetch("https://raw.githubusercontent.com/pm-project-frontend/jsons/master/issues.json");
-        let result2 = await fetch("https://raw.githubusercontent.com/pm-project-frontend/jsons/master/users.json");
-        let issues = await result1.json();
-        let projects = await result.json();
-        let users = await result2.json();
-        localStorage.setItem("users", JSON.stringify(users));
-        localStorage.setItem("projects", JSON.stringify(projects));
-        localStorage.setItem("issues", JSON.stringify(issues));
-        getResults();
-        gGenerateTable(gDataProjects);
-        gGenerateTable1(gDataIssues,gDataUsers);
-        gPopulateStaticAssignePart(gInputs.gSecondDiv,gDataIssues,gDataUsers);
-    } catch (error) {
-        throw new Error("Error!!!!")
-    }
-}
-//#endregion
-//#region get results method
-function getResults() {
-    gDataUsers = JSON.parse(localStorage.getItem("users"));
-    gDataProjects = JSON.parse(localStorage.getItem("projects"));
-    gDataIssues = JSON.parse(localStorage.getItem("issues"));
-    console.log(gDataIssues)
-  }
-  //#endregion
-//#region check method
-  function checkUp() {
-    if (localStorage.getItem("users") != null || localStorage.getItem("issues") != null || localStorage.getItem("projects") != null) {
-        console.log("Tuka se");
-        getResults();
-        gGenerateTable(gDataProjects);
-        gGenerateTable1(gDataIssues,gDataUsers);
-        gPopulateStaticAssignePart(gInputs.gSecondDiv,gDataIssues,gDataUsers);
-    } else {
-        gGetData();
-    }
-}
-checkUp();
-//#endregion
+gGenerateTable(gDataProjects);
+gGenerateTable1(gDataIssues,gDataUsers);
+gPopulateStaticAssignePart(gInputs.gSecondDiv,gDataIssues,gDataUsers);
